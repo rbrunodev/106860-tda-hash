@@ -25,7 +25,7 @@ hash_t *hash_crear(size_t capacidad)
 	if (!hash)
 		return NULL;
 	
-	hash->tabla = malloc(sizeof(nodo_t*) * capacidad);
+	hash->tabla = calloc(capacidad, sizeof(nodo_t*));
 	if (!hash->tabla){
 		free(hash);
 		return NULL;
@@ -73,7 +73,7 @@ size_t hash_cantidad(hash_t *hash)
 {
 	if (!hash)
 		return 0;
-	return 0;
+	return hash->cantidad;
 }
 
 void hash_destruir(hash_t *hash)
@@ -85,6 +85,24 @@ void hash_destruir_todo(hash_t *hash, void (*destructor)(void *))
 {
 	if (!hash)
 		return;
+
+	if(hash_cantidad(hash) == 0){
+		free(hash->tabla);
+		free(hash);
+		return;
+	}
+	
+	for (size_t i = 0; i < hash->capacidad; i++) {
+		nodo_t *nodo = hash->tabla[i];
+		while (nodo) {
+			nodo_t *nodo_a_eliminar = nodo;
+			nodo = nodo->siguiente;
+			if (destructor)
+				destructor(nodo_a_eliminar->valor);
+			free(nodo_a_eliminar->clave);
+			free(nodo_a_eliminar);
+		}
+	}
 
 	free(hash);
 }
