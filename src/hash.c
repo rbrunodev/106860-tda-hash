@@ -4,18 +4,17 @@
 #include "hash.h"
 
 #define FACTOR_CARGA_MAXIMO 0.7
-
 typedef struct nodo {
 	char *clave;
 	void *valor;
 	struct nodo *siguiente;
 }nodo_t;
 
-typedef struct {
+struct hash{
 	size_t capacidad;
 	size_t cantidad;
 	nodo_t **tabla;
-} hash_t;
+};
 
 hash_t *hash_crear(size_t capacidad)
 {
