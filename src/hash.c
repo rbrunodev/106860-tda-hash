@@ -5,9 +5,36 @@
 
 #define FACTOR_CARGA_MAXIMO 0.7
 
+typedef struct nodo {
+	char *clave;
+	void *valor;
+	struct nodo *siguiente;
+}nodo_t;
+
+typedef struct hash{
+	size_t capacidad;
+	size_t cantidad;
+	nodo_t **tabla;
+} hash_t;
+
 hash_t *hash_crear(size_t capacidad)
 {
-	return NULL;
+	if (capacidad < 3)
+		capacidad = 3;
+
+	hash_t *hash = malloc(sizeof(hash_t));
+	if (!hash)
+		return NULL;
+	
+	hash->tabla = malloc(sizeof(nodo_t*) * capacidad);
+	if (!hash->tabla){
+		free(hash);
+		return NULL;
+	}
+
+	hash->capacidad = capacidad;
+	hash->cantidad = 0;
+	return hash;
 }
 
 hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
