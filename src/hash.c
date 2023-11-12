@@ -11,7 +11,7 @@ typedef struct nodo {
 	struct nodo *siguiente;
 }nodo_t;
 
-typedef struct hash{
+typedef struct {
 	size_t capacidad;
 	size_t cantidad;
 	nodo_t **tabla;
