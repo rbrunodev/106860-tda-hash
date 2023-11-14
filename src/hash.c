@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "hash.h"
 
@@ -108,7 +109,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	}
 	size_t indice = indice_hash(clave) % hash->capacidad;
 
-	print("indice: %lu\n", indice);
+	printf("indice: %lu\n", indice);
 	return NULL;
 }
 
