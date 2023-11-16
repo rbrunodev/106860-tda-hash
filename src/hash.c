@@ -51,7 +51,7 @@ void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
 		while (nodo) {
 			nodo_t *nodo_a_mover = nodo;
 			nodo = nodo->siguiente;
-			size_t indice = indice_hash(nodo_a_mover->clave) % nueva_capacidad;
+			size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
 			nodo_a_mover->siguiente = tabla_nueva[indice];
 			tabla_nueva[indice] = nodo_a_mover;
 		}
