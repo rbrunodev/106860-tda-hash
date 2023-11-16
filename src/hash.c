@@ -37,16 +37,6 @@ hash_t *hash_crear(size_t capacidad)
 	return hash;
 }
 
-unsigned long indice_hash(const char *str) {
-    unsigned long hash = 5381;
-    int c;
-
-    while ((c = *str++))
-        hash = ((hash << 5) + hash) + c;
-
-    return hash;
-}
-
 void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
 {
 	if (!hash)
@@ -81,6 +71,16 @@ bool agregar_capacidad(hash_t *hash){
 	return factor_carga >= FACTOR_CARGA_MAXIMO;
 }
 
+size_t hash_func(const char *clave, size_t capacidad) {
+    size_t hash = 0;
+    while (*clave) {
+        hash = (hash * 31) + (*clave);
+        clave++;
+    }
+    return hash % capacidad;
+}
+
+
 /*
  * Inserta o actualiza un elemento en el hash asociado a la clave dada.
  *
@@ -107,7 +107,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		// if(!hash_redimensionar(hash, hash->capacidad * 2))
 		// 	return NULL;
 	}
-	size_t indice = indice_hash(clave) % hash->capacidad;
+	size_t indice = hash_func(clave, hash->capacidad);
 
 	printf("indice: %lu\n", indice);
 	return NULL;
