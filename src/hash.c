@@ -85,11 +85,11 @@ nodo_t *crear_nodo(const char *clave, void *elemento){
 	if(!nodo)
 		return NULL;
 	
-	char *cadena = (char *)calloc(strlen(clave) + 1, sizeof(char));
-	if (cadena) {
-		strcpy(cadena, clave); 
-	}
-	nodo->clave = cadena;
+	// char *cadena = (char *)calloc(strlen(clave) + 1, sizeof(char));
+	// if (cadena) {
+	// 	strcpy(cadena, clave); 
+	// }
+	nodo->clave = clave;
 	nodo->valor = elemento;
 	nodo->siguiente = NULL;
 	return nodo;
