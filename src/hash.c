@@ -80,16 +80,12 @@ size_t hash_func(const char *clave, size_t capacidad) {
     return hash % capacidad;
 }
 
-nodo_t *crear_nodo(const char *clave, void *elemento){
+nodo_t *crear_nodo(char *clave, void *elemento){
 	nodo_t *nodo = malloc(sizeof(nodo_t));
 	if(!nodo)
 		return NULL;
 	
-	nodo->clave = strdup(clave);
-    if (!nodo->clave) {
-        free(nodo);
-        return NULL;
-    }
+	nodo->clave = clave;
 	nodo->valor = elemento;
 	nodo->siguiente = NULL;
 	return nodo;
@@ -123,7 +119,13 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	}
 
 	size_t indice = hash_func(clave, hash->capacidad);
-	nodo_t *nuevo_nodo = crear_nodo(clave, elemento);
+
+	char *copia_clave = strdup(clave);
+    if (!copia_clave) {
+        free(copia_clave);
+        return NULL;
+    }
+	nodo_t *nuevo_nodo = crear_nodo(copia_clave, elemento);
 
 	if (!nuevo_nodo)
 		return NULL;
