@@ -85,11 +85,11 @@ nodo_t *crear_nodo(const char *clave, void *elemento){
 	if(!nodo)
 		return NULL;
 	
-	// char *cadena = (char *)calloc(strlen(clave) + 1, sizeof(char));
-	// if (cadena) {
-	// 	strcpy(cadena, clave); 
-	// }
-	nodo->clave = clave;
+	nodo->clave = strdup(clave);
+    if (!nodo->clave) {
+        free(nodo);
+        return NULL;
+    }
 	nodo->valor = elemento;
 	nodo->siguiente = NULL;
 	return nodo;
@@ -125,6 +125,12 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	size_t indice = hash_func(clave, hash->capacidad);
 	nodo_t *nuevo_nodo = crear_nodo(clave, elemento);
 
+	if (!nuevo_nodo)
+		return NULL;
+	
+	if(hash->tabla[indice] != NULL){
+		nuevo_nodo->siguiente = hash->tabla[indice];
+	}
 	//verificar si hay colision	
 
 	hash->tabla[indice] = nuevo_nodo;
