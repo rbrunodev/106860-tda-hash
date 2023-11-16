@@ -74,7 +74,7 @@ bool agregar_capacidad(hash_t *hash){
 size_t hash_func(const char *clave, size_t capacidad) {
     size_t hash = 0;
     while (*clave) {
-        hash = (hash * 31) + (*clave);
+        hash += *clave;
         clave++;
     }
     return hash % capacidad;
