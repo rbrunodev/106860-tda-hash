@@ -85,7 +85,11 @@ nodo_t *crear_nodo(const char *clave, void *elemento){
 	if(!nodo)
 		return NULL;
 	
-	nodo->clave = strdup(clave);
+	char *cadena = (char *)calloc(strlen(clave) + 1, sizeof(char));
+	if (cadena) {
+		strcpy(cadena, clave); 
+	}
+	nodo->clave = cadena;
 	nodo->valor = elemento;
 	nodo->siguiente = NULL;
 	return nodo;
@@ -117,7 +121,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		// if(!hash_redimensionar(hash, hash->capacidad * 2))
 		// 	return NULL;
 	}
-	
+
 	size_t indice = hash_func(clave, hash->capacidad);
 	nodo_t *nuevo_nodo = crear_nodo(clave, elemento);
 
