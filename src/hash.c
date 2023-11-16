@@ -121,22 +121,22 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	size_t indice = hash_func(clave, hash->capacidad);
 
 	printf("clave: %s\n", clave);
-	// char *copia_clave = strdup(clave);
-    // if (!copia_clave) {
-    //     free(copia_clave);
-    //     return NULL;
-    // }
-	// nodo_t *nuevo_nodo = crear_nodo(copia_clave, elemento);
+	char *copia_clave = strdup(clave);
+    if (!copia_clave) {
+        free(copia_clave);
+        return NULL;
+    }
+	nodo_t *nuevo_nodo = crear_nodo(copia_clave, elemento);
 
-	// if (!nuevo_nodo)
-	// 	return NULL;
+	if (!nuevo_nodo)
+		return NULL;
 	
-	// if(hash->tabla[indice] != NULL){
-	// 	nuevo_nodo->siguiente = hash->tabla[indice];
-	// }
-	// //verificar si hay colision	
+	if(hash->tabla[indice] != NULL){
+		nuevo_nodo->siguiente = hash->tabla[indice];
+	}
+	//verificar si hay colision	
 
-	// hash->tabla[indice] = nuevo_nodo;
+	hash->tabla[indice] = nuevo_nodo;
 
 	printf("indice: %lu\n", indice);
 	return hash;
