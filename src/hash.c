@@ -93,7 +93,6 @@ nodo_t *crear_nodo(const char *clave, void *elemento){
 		return NULL;
 	}
 	nodo->clave = cadena;
-	nodo->clave = clave;
 	nodo->valor = elemento;
 	nodo->siguiente = NULL;
 	return nodo;
