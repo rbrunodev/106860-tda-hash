@@ -37,30 +37,30 @@ hash_t *hash_crear(size_t capacidad)
 	return hash;
 }
 
-// void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
-// {
-// 	if (!hash)
-// 		return;
+void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
+{
+	// if (!hash)
+	// 	return;
 
-// 	nodo_t **tabla_nueva = calloc(nueva_capacidad, sizeof(nodo_t*));
-// 	if (!tabla_nueva)
-// 		return;
+	// nodo_t **tabla_nueva = calloc(nueva_capacidad, sizeof(nodo_t*));
+	// if (!tabla_nueva)
+	// 	return;
 
-// 	for (size_t i = 0; i < hash->capacidad; i++) {
-// 		nodo_t *nodo = hash->tabla[i];
-// 		while (nodo) {
-// 			nodo_t *nodo_a_mover = nodo;
-// 			nodo = nodo->siguiente;
-// 			// size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
-// 			// nodo_a_mover->siguiente = tabla_nueva[indice];
-// 			// tabla_nueva[indice] = nodo_a_mover;
-// 		}
-// 	}
+	// for (size_t i = 0; i < hash->capacidad; i++) {
+	// 	nodo_t *nodo = hash->tabla[i];
+	// 	while (nodo) {
+	// 		nodo_t *nodo_a_mover = nodo;
+	// 		nodo = nodo->siguiente;
+	// 		// size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
+	// 		// nodo_a_mover->siguiente = tabla_nueva[indice];
+	// 		// tabla_nueva[indice] = nodo_a_mover;
+	// 	}
+	// }
 
-// 	free(hash->tabla);
-// 	hash->tabla = tabla_nueva;
-// 	hash->capacidad = nueva_capacidad;
-// }
+	// free(hash->tabla);
+	// hash->tabla = tabla_nueva;
+	// hash->capacidad = nueva_capacidad;
+}
 
 bool agregar_capacidad(hash_t *hash){
 	if(!hash)
@@ -80,6 +80,16 @@ size_t hash_func(const char *clave, size_t capacidad) {
     return hash % capacidad;
 }
 
+nodo_t *crear_nodo(const char *clave, void *elemento){
+	nodo_t *nodo = malloc(sizeof(nodo_t));
+	if(!nodo)
+		return NULL;
+	
+	nodo->clave = strdup(clave);
+	nodo->valor = elemento;
+	nodo->siguiente = NULL;
+	return nodo;
+}
 
 /*
  * Inserta o actualiza un elemento en el hash asociado a la clave dada.
@@ -107,10 +117,16 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		// if(!hash_redimensionar(hash, hash->capacidad * 2))
 		// 	return NULL;
 	}
+	
 	size_t indice = hash_func(clave, hash->capacidad);
+	nodo_t *nuevo_nodo = crear_nodo(clave, elemento);
+
+	//verificar si hay colision	
+
+	hash->tabla[indice] = nuevo_nodo;
 
 	printf("indice: %lu\n", indice);
-	return NULL;
+	return hash;
 }
 
 void *hash_quitar(hash_t *hash, const char *clave)
