@@ -37,30 +37,30 @@ hash_t *hash_crear(size_t capacidad)
 	return hash;
 }
 
-void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
-{
-	if (!hash)
-		return;
+// void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
+// {
+// 	if (!hash)
+// 		return;
 
-	nodo_t **tabla_nueva = calloc(nueva_capacidad, sizeof(nodo_t*));
-	if (!tabla_nueva)
-		return;
+// 	nodo_t **tabla_nueva = calloc(nueva_capacidad, sizeof(nodo_t*));
+// 	if (!tabla_nueva)
+// 		return;
 
-	for (size_t i = 0; i < hash->capacidad; i++) {
-		nodo_t *nodo = hash->tabla[i];
-		while (nodo) {
-			nodo_t *nodo_a_mover = nodo;
-			nodo = nodo->siguiente;
-			// size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
-			// nodo_a_mover->siguiente = tabla_nueva[indice];
-			// tabla_nueva[indice] = nodo_a_mover;
-		}
-	}
+// 	for (size_t i = 0; i < hash->capacidad; i++) {
+// 		nodo_t *nodo = hash->tabla[i];
+// 		while (nodo) {
+// 			nodo_t *nodo_a_mover = nodo;
+// 			nodo = nodo->siguiente;
+// 			// size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
+// 			// nodo_a_mover->siguiente = tabla_nueva[indice];
+// 			// tabla_nueva[indice] = nodo_a_mover;
+// 		}
+// 	}
 
-	free(hash->tabla);
-	hash->tabla = tabla_nueva;
-	hash->capacidad = nueva_capacidad;
-}
+// 	free(hash->tabla);
+// 	hash->tabla = tabla_nueva;
+// 	hash->capacidad = nueva_capacidad;
+// }
 
 bool agregar_capacidad(hash_t *hash){
 	if(!hash)
@@ -74,7 +74,7 @@ bool agregar_capacidad(hash_t *hash){
 size_t hash_func(const char *clave, size_t capacidad) {
     size_t hash = 0;
     while (*clave) {
-        hash += *clave;
+      	hash += (size_t)(*clave);
         clave++;
     }
     return hash % capacidad;
