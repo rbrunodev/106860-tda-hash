@@ -131,9 +131,9 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	if (!nuevo_nodo)
 		return NULL;
 	
-	if(hash->tabla[indice] != NULL){
-		nuevo_nodo->siguiente = hash->tabla[indice];
-	}
+	// if(hash->tabla[indice] != NULL){
+	// 	nuevo_nodo->siguiente = hash->tabla[indice];
+	// }
 
 	//verificar si hay colision	
 	if(hash->tabla[indice] != NULL){
