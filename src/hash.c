@@ -140,11 +140,11 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		nodo_t *nodo = hash->tabla[indice];
 		nodo_t *nodo_actual = nodo;
 		while(nodo_actual){
-			if(strcmp(nodo->clave, clave) == 0){
+			if(strcmp(nodo_actual->clave, clave) == 0){
 				if(anterior){
 					*anterior = nodo->valor;
 				}
-				nodo->valor = elemento;
+				nodo_actual->valor = elemento;
 				printf("clave: %s\n", clave);
 				printf("cantidad: %zu\n", hash->cantidad);
 				return hash;
