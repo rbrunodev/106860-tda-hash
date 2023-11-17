@@ -141,6 +141,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		if (strcmp(nodo->clave, clave) == 0) {
 			if (anterior)
 				*anterior = nodo->valor;
+				free(nodo->valor);
 			// else
 			// 	free(nodo->valor);
 			nodo->valor = elemento;
