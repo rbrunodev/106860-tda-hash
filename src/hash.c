@@ -126,10 +126,10 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	}
 
 	size_t indice = hash_func(clave, hash->capacidad);
-	nodo_t *nuevo_nodo = crear_nodo(clave, elemento);
+	nodo_t *nuevo_nodo = NULL;
 
-	if (!nuevo_nodo)
-		return NULL;
+	// if (!nuevo_nodo)
+	// 	return NULL;
 	
 	// if(hash->tabla[indice] != NULL){
 	// 	nuevo_nodo->siguiente = hash->tabla[indice];
@@ -146,13 +146,19 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 			// else
 			// 	free(nodo->valor);
 			nodo->valor = elemento;
-			free(nuevo_nodo->clave); 
-			free(nuevo_nodo);
+			// free(nuevo_nodo->clave); 
+			// free(nuevo_nodo);
 			printf("cantidad: %zu\n", hash->cantidad);
 			return hash; 
 		}
+		nuevo_nodo = crear_nodo(clave, elemento);
+		if (!nuevo_nodo)
+			return NULL;
 		nodo->siguiente = nuevo_nodo;
 	}else {
+		nuevo_nodo = crear_nodo(clave, elemento);
+		if (!nuevo_nodo)
+			return NULL;
 		hash->tabla[indice] = nuevo_nodo;
 	}
 
