@@ -148,6 +148,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 			nodo->valor = elemento;
 			free(nuevo_nodo->clave); 
 			free(nuevo_nodo);
+			printf("cantidad: %zu\n", hash->cantidad);
 			return hash; 
 		}
 		nodo->siguiente = nuevo_nodo;
@@ -155,7 +156,9 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		hash->tabla[indice] = nuevo_nodo;
 	}
 
+
 	hash->cantidad++;
+	printf("cantidad: %zu\n", hash->cantidad);
 	return hash;
 }
 
