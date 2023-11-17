@@ -155,9 +155,11 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		nuevo_nodo = crear_nodo(clave, elemento);
 		if (!nuevo_nodo)
 			return NULL;
-		if(nodo_actual){
-			nodo_actual->siguiente = nuevo_nodo;
-		}
+
+
+		// if(nodo_actual){
+		nodo_actual->siguiente = nuevo_nodo;
+		// }
 		// nodo->siguiente = nuevo_nodo;
 	}else {
 		nuevo_nodo = crear_nodo(clave, elemento);
