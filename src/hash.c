@@ -139,6 +139,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	if(hash->tabla[indice]){
 		nodo_t *nodo = hash->tabla[indice];
 		nodo_t *nodo_actual = nodo;
+
 		while(nodo_actual){
 			if(strcmp(nodo_actual->clave, clave) == 0){
 				if(anterior){
@@ -157,6 +158,9 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 			return NULL;
 
 
+		printf("clave: %s\n", clave);
+		printf("cantidad: %zu\n", hash->cantidad);
+		print("nodo_actual: %s\n", nodo_actual->clave);
 		// if(nodo_actual){
 		nodo_actual->siguiente = nuevo_nodo;
 		// }
