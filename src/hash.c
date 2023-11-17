@@ -148,7 +148,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 			free(nuevo_nodo);
 			return hash; 
 		}
-		nodo = nodo->siguiente;
+		nodo->siguiente = nuevo_nodo;
 	}else {
 		hash->tabla[indice] = nuevo_nodo;
 	}
