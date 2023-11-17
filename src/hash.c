@@ -152,10 +152,12 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
     if (anterior)
         *anterior = NULL;  
 
-    if (nodo_previo)
+    if (nodo_previo){
         nodo_previo->siguiente = nuevo_nodo;
-    else
+	}
+    else{
         hash->tabla[indice] = nuevo_nodo;
+	}
 
 	hash->cantidad++;
 	return hash;
