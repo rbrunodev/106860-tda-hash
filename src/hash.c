@@ -153,6 +153,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		hash->tabla[indice] = nuevo_nodo;
 	}
 
+	hash->cantidad++;
 	return hash;
 }
 
