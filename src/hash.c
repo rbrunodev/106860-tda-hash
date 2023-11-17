@@ -127,7 +127,6 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 
 	size_t indice = hash_func(clave, hash->capacidad);
 	printf("indice: %zu\n", indice);
-	nodo_t *nuevo_nodo = NULL;
 
 	// if (!nuevo_nodo)
 	// 	return NULL;
