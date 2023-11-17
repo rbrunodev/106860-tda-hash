@@ -139,9 +139,10 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	if(hash->tabla[indice] != NULL){
 		nodo_t *nodo = hash->tabla[indice];
 		if (strcmp(nodo->clave, clave) == 0) {
-			if (anterior)
+			if (anterior){
 				*anterior = nodo->valor;
 				free(nodo->valor);
+			}
 			// else
 			// 	free(nodo->valor);
 			nodo->valor = elemento;
