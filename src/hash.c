@@ -126,33 +126,13 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	}
 
 	size_t indice = hash_func(clave, hash->capacidad);
-	printf("indice: %zu\n", indice);
-
-	// if (!nuevo_nodo)
-	// 	return NULL;
-	
-	// if(hash->tabla[indice] != NULL){
-	// 	nuevo_nodo->siguiente = hash->tabla[indice];
-	// }
-
-	//verificar si hay colision	
 	nodo_t *nodo = hash->tabla[indice];
 	nodo_t *nodo_previo = NULL;
 
 	while(nodo){
-		// if(strcmp(nodo->clave, clave) == 0){
-		// 	if(anterior){
-		// 		*anterior = nodo->valor;
-		// 		free(nodo->valor);
-		// 	}
-		// 	nodo->valor = elemento;
-		// 	printf("clave: %s\n", clave);
-		// 	printf("cantidad: %zu\n", hash->cantidad);
-		// 	return hash;
-		// }
-		// nodo_actual = nodo;
-		// nodo = nodo->siguiente;
 		if (strcmp(nodo->clave, clave) == 0) {
+			if(strcmp(nodo->valor, elemento) == 0)
+				return hash;
 			printf("repite indice y clave");
 			printf("clave: %s\n", clave);
 			if (anterior) {
@@ -166,19 +146,16 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	}
 
 	nodo_t *nuevo_nodo = crear_nodo(clave, elemento);
-    if (!nuevo_nodo) {
+    if (!nuevo_nodo)
         return NULL;
-    }
 
-    if (anterior) {
+    if (anterior)
         *anterior = NULL;  
-    }
 
-    if (nodo_previo) {
+    if (nodo_previo)
         nodo_previo->siguiente = nuevo_nodo;
-    } else {
+    else
         hash->tabla[indice] = nuevo_nodo;
-    }
 
 	hash->cantidad++;
 	return hash;
