@@ -138,7 +138,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	//verificar si hay colision	
 	if(hash->tabla[indice]){
 		nodo_t *nodo = hash->tabla[indice];
-		while(nodo){
+		nodo_t *nodo_actual = nodo;
+		while(nodo_actual){
 			if(strcmp(nodo->clave, clave) == 0){
 				if(anterior){
 					*anterior = nodo->valor;
@@ -148,7 +149,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 				printf("cantidad: %zu\n", hash->cantidad);
 				return hash;
 			}
-			nodo = nodo->siguiente;
+			nodo_actual = nodo_actual->siguiente;
 		}
 		nuevo_nodo = crear_nodo(clave, elemento);
 		if (!nuevo_nodo)
@@ -160,7 +161,6 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 			return NULL;
 		hash->tabla[indice] = nuevo_nodo;
 	}
-
 
 	hash->cantidad++;
 	printf("cantidad: %zu\n", hash->cantidad);
