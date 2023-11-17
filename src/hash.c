@@ -160,7 +160,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 
 		printf("clave: %s\n", clave);
 		printf("cantidad: %zu\n", hash->cantidad);
-		print("nodo_actual: %s\n", nodo_actual->clave);
+		printf("nodo_actual: %s\n", nodo_actual->clave);
 		// if(nodo_actual){
 		nodo_actual->siguiente = nuevo_nodo;
 		// }
