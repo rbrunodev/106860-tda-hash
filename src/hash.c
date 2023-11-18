@@ -181,12 +181,21 @@ void *hash_quitar(hash_t *hash, const char *clave) {
 }
 
 
-void *hash_obtener(hash_t *hash, const char *clave)
-{
-	if (!hash)
-		return NULL;
+void *hash_obtener(hash_t *hash, const char *clave) {
+    if (!hash || !clave)
+        return NULL;
 
-	return NULL;
+    size_t indice = hash_func(clave, hash->capacidad);
+    nodo_t *nodo = hash->tabla[indice];
+
+    while (nodo) {
+        if (strcmp(nodo->clave, clave) == 0) {
+            return nodo->valor;
+        }
+        nodo = nodo->siguiente; 
+    }
+
+    return NULL;
 }
 
 bool hash_contiene(hash_t *hash, const char *clave)
