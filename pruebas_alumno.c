@@ -2,16 +2,16 @@
 
 void prueba_simple()
 {
-	int i = 14;
-	int j = 16;
-	pa2m_afirmar(i != j, "i=14 es diferente de j=16");
+        int i = 14;
+        int j = 16;
+        pa2m_afirmar(i != j, "i=14 es diferente de j=16");
 }
 
 int main()
 {
-	pa2m_nuevo_grupo(
-		"\n======================== XXX ========================");
-	prueba_simple();
+        pa2m_nuevo_grupo(
+                "\n======================== XXX ========================");
+        prueba_simple();
 
-	return pa2m_mostrar_reporte();
+        return pa2m_mostrar_reporte();
 }
