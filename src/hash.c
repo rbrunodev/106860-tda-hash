@@ -249,6 +249,7 @@ void hash_destruir_todo(hash_t *hash, void (*destructor)(void *))
 		}
 	}
 
+	free(hash->tabla);
 	free(hash);
 }
 
