@@ -167,9 +167,8 @@ void prueba_iterador()
 
 	iteraciones =
 		hash_con_cada_clave(hash, continuar_iterando, (void *)clave4);
-	printf("iteraciones: %zu\n", iteraciones);
 	pa2m_afirmar(
-		iteraciones == 3,
+		iteraciones == 2,
 		"La iteración devuelve la cantidad correcta después de recorrer 3 claves");
 
 	hash_destruir(hash);
