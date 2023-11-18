@@ -198,10 +198,20 @@ void *hash_obtener(hash_t *hash, const char *clave) {
 
 bool hash_contiene(hash_t *hash, const char *clave)
 {
-	if (!hash)
-		return NULL;
+	if (!hash || !clave)
+        return false;
 
-	return false;
+    size_t indice = hash_func(clave, hash->capacidad);
+    nodo_t *nodo = hash->tabla[indice];
+
+    while (nodo) {
+        if (strcmp(nodo->clave, clave) == 0) {
+            return true;
+        }
+        nodo = nodo->siguiente;  
+    }
+
+    return false;
 }
 
 size_t hash_cantidad(hash_t *hash)
