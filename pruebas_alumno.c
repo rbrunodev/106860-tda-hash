@@ -104,16 +104,16 @@ void prueba_eliminar()
 	hash_insertar(hash, clave3, valor3, NULL);
 
 	pa2m_afirmar(hash_quitar(hash, NULL) == NULL &&
-			     hash_cantidad(hash) == 5,
+			     hash_cantidad(hash) == 3,
 		     "Se intenta eliminar una clave NULL y no se elimina nada");
 
 	pa2m_afirmar(hash_quitar(hash, clave1) == valor1 &&
-			     hash_cantidad(hash) == 4 &&
+			     hash_cantidad(hash) == 2 &&
 			     !hash_contiene(hash, clave1),
 		     "Se elimina clave1 con valor1 y no contiene la clave1");
 
 	pa2m_afirmar(hash_quitar(hash, clave3) == valor3 &&
-			     hash_cantidad(hash) == 3 &&
+			     hash_cantidad(hash) == 1 &&
 			     !hash_contiene(hash, clave3),
 		     "Se elimina clave3 con valor3 y no contiene la clave3");
 
