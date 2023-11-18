@@ -39,27 +39,31 @@ hash_t *hash_crear(size_t capacidad)
 
 void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
 {
-	// if (!hash)
-	// 	return;
+	if (!hash)
+		return;
 
-	// nodo_t **tabla_nueva = calloc(nueva_capacidad, sizeof(nodo_t*));
-	// if (!tabla_nueva)
-	// 	return;
+	nodo_t **tabla_nueva = calloc(nueva_capacidad, sizeof(nodo_t*));
+	if (!tabla_nueva)
+		return;
+	
+	size_t nueva_cantidad = 0;
 
-	// for (size_t i = 0; i < hash->capacidad; i++) {
-	// 	nodo_t *nodo = hash->tabla[i];
-	// 	while (nodo) {
-	// 		nodo_t *nodo_a_mover = nodo;
-	// 		nodo = nodo->siguiente;
-	// 		// size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
-	// 		// nodo_a_mover->siguiente = tabla_nueva[indice];
-	// 		// tabla_nueva[indice] = nodo_a_mover;
-	// 	}
-	// }
+	for (size_t i = 0; i < hash->capacidad; i++) {
+		nodo_t *nodo = hash->tabla[i];
+		while (nodo) {
+			nodo_t *nodo_a_mover = nodo;
+			nodo = nodo->siguiente;
+			size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
+			//nodo_a_mover->siguiente = tabla_nueva[indice];
+			tabla_nueva[indice] = nodo_a_mover;
+			nueva_cantidad++;
+		}
+	}
 
-	// free(hash->tabla);
-	// hash->tabla = tabla_nueva;
-	// hash->capacidad = nueva_capacidad;
+	free(hash->tabla);
+	hash->tabla = tabla_nueva;
+	hash->capacidad = nueva_capacidad;
+	hash->cantidad = nueva_cantidad;
 }
 
 bool agregar_capacidad(hash_t *hash){
@@ -121,8 +125,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		return NULL;
 
 	if (agregar_capacidad(hash)){
-		// if(!hash_redimensionar(hash, hash->capacidad * 2))
-		// 	return NULL;
+		hash_redimensionar(hash, hash->capacidad * 2);
 	}
 
 	size_t indice = hash_func(clave, hash->capacidad);
