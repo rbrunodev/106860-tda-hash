@@ -118,10 +118,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 
 	while(nodo){
 		if (strcmp(nodo->clave, clave) == 0) {
-			if(strcmp(nodo->valor, elemento) == 0)
-				return hash;
-			printf("repite indice y clave");
-			printf("clave: %s\n", clave);
+			// if(strcmp(nodo->valor, elemento) == 0)
+			// 	return hash;
 			if (anterior) {
 				*anterior = nodo->valor;
 			}
