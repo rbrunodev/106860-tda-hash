@@ -126,6 +126,9 @@ void prueba_eliminar()
 
 bool continuar_iterando(const char *clave, void *valor, void *aux)
 {
+	if (!aux) {
+		return true;
+	}
 	return strcmp(clave, (char *)aux) == 0;
 }
 
