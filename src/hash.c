@@ -55,18 +55,18 @@ void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
 	if (!tabla_nueva)
 		return;
 	
-	size_t nueva_cantidad = 0;
+	size_t nueva_cantidad = hash->cantidad;
 
 	for (size_t i = 0; i < hash->capacidad; i++) {
 		nodo_t *nodo = hash->tabla[i];
 		while (nodo) {
-			nodo_t *nodo_a_mover = nodo;
-			nodo = nodo->siguiente;
-			size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
-			//nodo_a_mover->siguiente = tabla_nueva[indice];
-			tabla_nueva[indice] = nodo_a_mover;
-			nueva_cantidad++;
-		}
+            nodo_t *nodo_a_mover = nodo;
+            nodo = nodo->siguiente;
+
+            size_t indice = hash_func(nodo_a_mover->clave, nueva_capacidad);
+            nodo_a_mover->siguiente = tabla_nueva[indice];
+            tabla_nueva[indice] = nodo_a_mover;
+        }
 	}
 
 	free(hash->tabla);
@@ -102,22 +102,6 @@ nodo_t *crear_nodo(const char *clave, void *elemento){
 	return nodo;
 }
 
-/*
- * Inserta o actualiza un elemento en el hash asociado a la clave dada.
- *
- * Si la clave ya existía y se reemplaza el elemento, se almacena un puntero al
- * elemento reemplazado en *anterior, si anterior no es NULL.
- *
- * Si la clave no existía y anterior no es NULL, se almacena NULL en *anterior.
- *
- * La función almacena una copia de la clave provista por el usuario,
- *
- * Nota para los alumnos: Recordar que si insertar un elemento provoca
- * que el factor de carga exceda cierto umbral, SE DEBE AJUSTAR EL
- * TAMAÑO DE LA TABLA PARA EVITAR FUTURAS COLISIONES.
- *
- * Devuelve el hash si pudo guardar el elemento o NULL si no pudo.
- */
 hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		      void **anterior)
 {
