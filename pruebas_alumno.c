@@ -58,6 +58,7 @@ int main()
 	prueba_crear();
 
 	pa2m_nuevo_grupo("\n=============== PRUEBAS DE INSERTAR ===========");
+	prueba_insertar();
 
 	return pa2m_mostrar_reporte();
 }
