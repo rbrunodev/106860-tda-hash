@@ -56,14 +56,16 @@ void prueba_insertar()
 			hash_obtener(hash, clave3) == valor3,
 		"Se inserta clave3 con valor3 y se obtiene la clave3 con valor3");
 	pa2m_afirmar(hash_cantidad(hash) == 3, "La cantidad es 3");
-	
+
 	pa2m_afirmar(
 		hash_insertar(hash, clave3, valor4, NULL) == hash &&
 			hash_cantidad(hash) == 3 &&
 			hash_obtener(hash, clave3) == valor4,
 		"Se inserta clave3 con valor4 y se obtiene la clave3 con valor4");
-	pa2m_afirmar(hash_cantidad(hash) == 3, "La cantidad sigue siendo 3, se actualiza el valor de la clave");
-	
+	pa2m_afirmar(
+		hash_cantidad(hash) == 3,
+		"La cantidad sigue siendo 3, se actualiza el valor de la clave");
+
 	pa2m_afirmar(
 		hash_insertar(hash, clave4, valor4, NULL) == hash &&
 			hash_cantidad(hash) == 4 &&
@@ -83,8 +85,10 @@ void prueba_insertar()
 			hash_cantidad(hash) == 5 &&
 			hash_obtener(hash, clave5) == valor1,
 		"Se inserta clave5 con valor1 y se obtiene la clave5 con valor1");
-	pa2m_afirmar(hash_cantidad(hash) == 5, "La cantidad sigue siendo 5, se actualiza el valor de la clave");
-	
+	pa2m_afirmar(
+		hash_cantidad(hash) == 5,
+		"La cantidad sigue siendo 5, se actualiza el valor de la clave");
+
 	hash_destruir(hash);
 }
 
@@ -120,6 +124,52 @@ void prueba_eliminar()
 	hash_destruir(hash);
 }
 
+bool continuar_iterando(const char *clave, void *valor, void *aux)
+{
+	return strcmp(clave, (char *)aux) == 0;
+}
+
+void prueba_iterador()
+{
+	hash_t *hash = hash_crear(5);
+	char *clave1 = "clave1";
+	char *clave2 = "clave2";
+	char *clave3 = "clave3";
+	char *clave4 = "clave4";
+	char *clave5 = "clave5";
+
+	char *valor1 = "valor1";
+	char *valor2 = "valor2";
+	char *valor3 = "valor3";
+	char *valor4 = "valor4";
+	char *valor5 = "valor5";
+
+	hash_insertar(hash, clave1, valor1, NULL);
+	hash_insertar(hash, clave2, valor2, NULL);
+	hash_insertar(hash, clave3, valor3, NULL);
+	hash_insertar(hash, clave4, valor4, NULL);
+	hash_insertar(hash, clave5, valor5, NULL);
+
+	size_t iteraciones =
+		hash_con_cada_clave(hash, continuar_iterando, NULL);
+	pa2m_afirmar(iteraciones == hash_cantidad(hash),
+		     "Se iteró sobre todas las claves del hash");
+
+	iteraciones =
+		hash_con_cada_clave(hash, continuar_iterando, (void *)clave2);
+	pa2m_afirmar(
+		iteraciones < hash_cantidad(hash),
+		"La iteración se detiene en una clave específica antes de recorrer todo el hash");
+
+	iteraciones =
+		hash_con_cada_clave(hash, continuar_iterando, (void *)clave4);
+	pa2m_afirmar(
+		iteraciones == 3,
+		"La iteración devuelve la cantidad correcta después de recorrer 3 claves");
+
+	hash_destruir(hash);
+}
+
 int main()
 {
 	pa2m_nuevo_grupo(
@@ -135,6 +185,9 @@ int main()
 	pa2m_nuevo_grupo(
 		"\n=============== PRUEBAS DE ELIMINACION ===========");
 	prueba_eliminar();
+
+	pa2m_nuevo_grupo("\n=============== PRUEBAS DE ITERADOR ===========");
+	prueba_iterador();
 
 	return pa2m_mostrar_reporte();
 }
