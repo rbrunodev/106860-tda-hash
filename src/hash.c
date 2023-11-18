@@ -150,13 +150,36 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	return hash;
 }
 
-void *hash_quitar(hash_t *hash, const char *clave)
-{
-	if (!hash)
-		return NULL;
+void *hash_quitar(hash_t *hash, const char *clave) {
+    if (!hash || !clave)
+        return NULL;
 
-	return NULL;
+    size_t indice = hash_func(clave, hash->capacidad);
+    nodo_t *nodo_actual = hash->tabla[indice];
+    nodo_t *nodo_anterior = NULL;
+
+    while (nodo_actual) {
+        if (strcmp(nodo_actual->clave, clave) == 0) {
+            if (nodo_anterior) {
+                nodo_anterior->siguiente = nodo_actual->siguiente;
+            } else {
+                hash->tabla[indice] = nodo_actual->siguiente;
+            }
+
+            void *valor = nodo_actual->valor;
+            free(nodo_actual->clave); 
+            free(nodo_actual);  
+            hash->cantidad--; 
+            return valor;
+        }
+
+        nodo_anterior = nodo_actual;
+        nodo_actual = nodo_actual->siguiente;
+    }
+
+    return NULL; 
 }
+
 
 void *hash_obtener(hash_t *hash, const char *clave)
 {
