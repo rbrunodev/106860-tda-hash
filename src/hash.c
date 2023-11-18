@@ -217,6 +217,7 @@ void hash_destruir_todo(hash_t *hash, void (*destructor)(void *))
 			nodo = nodo->siguiente;
 			if (destructor)
 				destructor(nodo_a_eliminar->valor);
+			free(nodo_a_eliminar->valor);
 			free(nodo_a_eliminar->clave);
 			free(nodo_a_eliminar);
 		}
