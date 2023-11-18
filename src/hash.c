@@ -260,5 +260,15 @@ size_t hash_con_cada_clave(hash_t *hash,
 	if (!hash || !f)
 		return n;
 
+    for (size_t i = 0; i < hash->capacidad; ++i) {
+        nodo_t *nodo_actual = hash->tabla[i];
+        while (nodo_actual) {
+            if (!f(nodo_actual->clave, nodo_actual->valor, aux)) {
+                return n;
+            }
+            n++;
+            nodo_actual = nodo_actual->siguiente; 
+        }
+    }
 	return n;
 }
