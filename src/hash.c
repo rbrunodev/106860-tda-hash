@@ -37,6 +37,15 @@ hash_t *hash_crear(size_t capacidad)
 	return hash;
 }
 
+size_t hash_func(const char *clave, size_t capacidad) {
+    size_t hash = 0;
+    while (*clave) {
+      	hash += (size_t)(*clave);
+        clave++;
+    }
+    return hash % capacidad;
+}
+
 void hash_redimensionar(hash_t *hash, size_t nueva_capacidad)
 {
 	if (!hash)
@@ -73,15 +82,6 @@ bool agregar_capacidad(hash_t *hash){
 	size_t factor_carga = hash->cantidad / hash->capacidad;
 
 	return factor_carga >= FACTOR_CARGA_MAXIMO;
-}
-
-size_t hash_func(const char *clave, size_t capacidad) {
-    size_t hash = 0;
-    while (*clave) {
-      	hash += (size_t)(*clave);
-        clave++;
-    }
-    return hash % capacidad;
 }
 
 nodo_t *crear_nodo(const char *clave, void *elemento){
