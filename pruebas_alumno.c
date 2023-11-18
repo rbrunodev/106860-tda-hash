@@ -1,5 +1,5 @@
 #include "pa2m.h"
-#include "hash.h"
+#include "src/hash.h"
 
 void prueba_crear()
 {
