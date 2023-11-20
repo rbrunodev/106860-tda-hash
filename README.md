@@ -4,54 +4,57 @@
 
 # TDA HASH
 
-## Repositorio de (Nombre Apellido) - (Padrón) - (Mail)
+## Repositorio de Renata Bruno - 106860 - rc.brunoo@gmail.com
 
 - Para compilar:
 
 ```bash
-línea de compilación
+gcc -o pruebas_alumno pruebas_alumno.c
 ```
 
 - Para ejecutar:
 
 ```bash
-línea de ejecución
+./pruebas_alumno 
 ```
 
 - Para ejecutar con valgrind:
 ```bash
-línea con valgrind
+valgrind ./pruebas_alumno 
 ```
 ---
 ##  Funcionamiento
-
-Explicación de cómo funcionan las estructuras desarrolladas en el TP y el funcionamiento general del mismo.
-
-Aclarar en esta parte todas las decisiones que se tomaron al realizar el TP, cosas que no se aclaren en el enunciado, fragmentos de código que necesiten explicación extra, etc.
-
-Incluír **EN TODOS LOS TPS** los diagramas relevantes al problema (mayormente diagramas de memoria para explicar las estructuras, pero se pueden utilizar otros diagramas si es necesario).
-
-### Por ejemplo:
-
-El programa funciona abriendo el archivo pasado como parámetro y leyendolo línea por línea. Por cada línea crea un registro e intenta agregarlo al vector. La función de lectura intenta leer todo el archivo o hasta encontrar el primer error. Devuelve un vector con todos los registros creados.
-
-<div align="center">
-<img width="70%" src="img/diagrama1.svg">
-</div>
-
-En el archivo `sarasa.c` la función `funcion1` utiliza `realloc` para agrandar la zona de memoria utilizada para conquistar el mundo. El resultado de `realloc` lo guardo en una variable auxiliar para no perder el puntero original en caso de error:
+La función `hash_crear` utiliza `malloc` para asignar memoria en el heap para un nuevo hash_t y lo guardo en el puntero de hash, en caso de error retorno NULL. 
 
 ```c
-int *vector = realloc(vector_original, (n+1)*sizeof(int));
+hash_t *hash = malloc(sizeof(hash_t));
 
-if(vector == NULL)
-    return -1;
-vector_original = vector;
+if (!hash)
+    return NULL;
+```
+
+Luego, asigno memoria en el heap utilizando `calloc` para un vector de punteros a nodo_t, el número de elementos en este array es igual a capacidad, y el tamaño de cada elemento es el tamaño de un puntero a nodo_t. Esto lo guardo en el puntero de `hash->tabla`, en caso de error retorno NULL y libero la memoria asignada anteriormente.
+
+```c
+hash->tabla = calloc(capacidad, sizeof(nodo_t *));
+
+if (!hash->tabla) {
+    free(hash);
+    return NULL;
+}
+```
+
+Por último, inicializo los valores del hash y retorno el hash creado.
+
+```c
+hash->capacidad = capacidad;
+hash->cantidad = 0;
+return hash;
 ```
 
 
 <div align="center">
-<img width="70%" src="img/diagrama2.svg">
+<img width="70%" src="img/hash-crear.png">
 </div>
 
 ---
