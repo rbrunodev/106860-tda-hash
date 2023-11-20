@@ -39,6 +39,12 @@ void prueba_insertar()
 	char *valor4 = "valor4";
 	char *valor5 = "valor5";
 
+	pa2m_afirmar(hash_insertar(NULL, clave1, valor1, NULL) == NULL,
+		     "No se puede insertar en un hash NULL");
+
+	pa2m_afirmar(hash_insertar(hash, NULL, valor1, NULL) == NULL,
+		     "No se puede insertar una clave NULL");
+
 	pa2m_afirmar(
 		hash_insertar(hash, clave1, valor1, NULL) == hash &&
 			hash_cantidad(hash) == 1,
@@ -108,19 +114,25 @@ void prueba_eliminar()
 	hash_insertar(hash, clave2, valor2, NULL);
 	hash_insertar(hash, clave3, valor3, NULL);
 
+	pa2m_afirmar(hash_quitar(NULL, clave1) == NULL &&
+			     hash_cantidad(hash) == 3,
+		     "No se puede eliminar en un hash NULL");
+
 	pa2m_afirmar(hash_quitar(hash, NULL) == NULL &&
 			     hash_cantidad(hash) == 3,
 		     "Se intenta eliminar una clave NULL y no se elimina nada");
 
-	pa2m_afirmar(hash_quitar(hash, clave1) == valor1 &&
-			     hash_cantidad(hash) == 2 &&
-			     !hash_contiene(hash, clave1),
-		     "Se elimina clave1 con valor1 y no contiene la clave1");
+	pa2m_afirmar(
+		hash_quitar(hash, clave1) == valor1 &&
+			hash_cantidad(hash) == 2 &&
+			!hash_contiene(hash, clave1),
+		"Se elimina clave1 con valor1 y se verifica que no contiene la clave1");
 
-	pa2m_afirmar(hash_quitar(hash, clave3) == valor3 &&
-			     hash_cantidad(hash) == 1 &&
-			     !hash_contiene(hash, clave3),
-		     "Se elimina clave3 con valor3 y no contiene la clave3");
+	pa2m_afirmar(
+		hash_quitar(hash, clave3) == valor3 &&
+			hash_cantidad(hash) == 1 &&
+			!hash_contiene(hash, clave3),
+		"Se elimina clave3 con valor3 y se verifica que no contiene la clave3");
 
 	hash_destruir(hash);
 }
@@ -153,6 +165,12 @@ void prueba_iterador()
 	hash_insertar(hash, clave3, valor3, NULL);
 	hash_insertar(hash, clave4, valor4, NULL);
 	hash_insertar(hash, clave5, valor5, NULL);
+
+	pa2m_afirmar(hash_con_cada_clave(NULL, continuar_iterando, NULL) == 0,
+		     "No se puede iterar sobre un hash NULL");
+
+	pa2m_afirmar(hash_con_cada_clave(hash, NULL, NULL) == 0,
+		     "No se puede iterar con una funcion NULL");
 
 	size_t iteraciones =
 		hash_con_cada_clave(hash, continuar_iterando, NULL);
