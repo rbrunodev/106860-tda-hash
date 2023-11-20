@@ -106,15 +106,6 @@ nodo_t *crear_nodo(const char *clave, void *elemento)
 	return nodo;
 }
 
-nodo_t *devolver_nodo_por_indice(hash_t *hash, const char *clave)
-{
-	if (!hash)
-		return NULL;
-
-	size_t indice = hash_func(clave, hash->capacidad);
-	return hash->tabla[indice];
-}
-
 hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		      void **anterior)
 {
@@ -125,7 +116,8 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		hash_redimensionar(hash, hash->capacidad * 2);
 	}
 
-	nodo_t *nodo = devolver_nodo_por_indice(hash, clave);
+	size_t indice = hash_func(clave, hash->capacidad);
+	nodo_t *nodo = hash->tabla[indice];
 	nodo_t *nodo_previo = NULL;
 
 	while (nodo) {
@@ -150,7 +142,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 	if (nodo_previo) {
 		nodo_previo->siguiente = nuevo_nodo;
 	} else {
-		nodo = nuevo_nodo;
+		hash->tabla[indice] = nuevo_nodo;
 	}
 
 	hash->cantidad++;
@@ -162,7 +154,8 @@ void *hash_quitar(hash_t *hash, const char *clave)
 	if (!hash || !clave)
 		return NULL;
 
-	nodo_t *nodo_actual = devolver_nodo_por_indice(hash, clave);
+	size_t indice = hash_func(clave, hash->capacidad);
+	nodo_t *nodo_actual = hash->tabla[indice];
 	nodo_t *nodo_anterior = NULL;
 
 	while (nodo_actual) {
@@ -171,7 +164,7 @@ void *hash_quitar(hash_t *hash, const char *clave)
 				nodo_anterior->siguiente =
 					nodo_actual->siguiente;
 			} else {
-				nodo_actual = nodo_actual->siguiente;
+				hash->tabla[indice] = nodo_actual->siguiente;
 			}
 
 			void *valor = nodo_actual->valor;
@@ -193,7 +186,8 @@ void *hash_obtener(hash_t *hash, const char *clave)
 	if (!hash || !clave)
 		return NULL;
 
-	nodo_t *nodo = devolver_nodo_por_indice(hash, clave);
+	size_t indice = hash_func(clave, hash->capacidad);
+	nodo_t *nodo = hash->tabla[indice];
 
 	while (nodo) {
 		if (strcmp(nodo->clave, clave) == 0) {
@@ -210,7 +204,8 @@ bool hash_contiene(hash_t *hash, const char *clave)
 	if (!hash || !clave)
 		return false;
 
-	nodo_t *nodo = devolver_nodo_por_indice(hash, clave);
+	size_t indice = hash_func(clave, hash->capacidad);
+	nodo_t *nodo = hash->tabla[indice];
 
 	while (nodo) {
 		if (strcmp(nodo->clave, clave) == 0) {
