@@ -75,7 +75,7 @@ vector_original = vector;
     La tabla de hash es una estructura que contiene valores, donde puedo acceder a los mismos a través de una clave.
     Los diferentes métodos de resolución de colisiones son:
     - Encadenamiento: Se utiliza una lista enlazada para almacenar los elementos que colisionan.
-    - Probing: Se utiliza una función de hash secundaria para calcular un nuevo índice en caso de colisión.
+    - Probing: Se busca el siguiente espacio libre inmediato donde se almacena el elemento de colisión.
     - Zona de desborde: Se utiliza una zona de la tabla de hash para almacenar los elementos que colisionan.
 <div align="center">
 <img width="70%" src="img/tabla-hash.png">
