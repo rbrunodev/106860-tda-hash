@@ -1,6 +1,7 @@
 #include "pa2m.h"
 #include "src/hash.h"
 #include <stdio.h>
+#include <string.h>
 
 void prueba_crear()
 {
