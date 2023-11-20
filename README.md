@@ -4,57 +4,82 @@
 
 # TDA HASH
 
-## Repositorio de (Nombre Apellido) - (Padrón) - (Mail)
+## Repositorio de Renata Bruno - 106860 - rc.brunoo@gmail.com
 
 - Para compilar:
 
 ```bash
-línea de compilación
+gcc -o pruebas_alumno pruebas_alumno.c
 ```
 
 - Para ejecutar:
 
 ```bash
-línea de ejecución
+./pruebas_alumno 
 ```
 
 - Para ejecutar con valgrind:
 ```bash
-línea con valgrind
+valgrind ./pruebas_alumno 
 ```
 ---
 ##  Funcionamiento
-
-Explicación de cómo funcionan las estructuras desarrolladas en el TP y el funcionamiento general del mismo.
-
-Aclarar en esta parte todas las decisiones que se tomaron al realizar el TP, cosas que no se aclaren en el enunciado, fragmentos de código que necesiten explicación extra, etc.
-
-Incluír **EN TODOS LOS TPS** los diagramas relevantes al problema (mayormente diagramas de memoria para explicar las estructuras, pero se pueden utilizar otros diagramas si es necesario).
-
-### Por ejemplo:
-
-El programa funciona abriendo el archivo pasado como parámetro y leyendolo línea por línea. Por cada línea crea un registro e intenta agregarlo al vector. La función de lectura intenta leer todo el archivo o hasta encontrar el primer error. Devuelve un vector con todos los registros creados.
-
-<div align="center">
-<img width="70%" src="img/diagrama1.svg">
-</div>
-
-En el archivo `sarasa.c` la función `funcion1` utiliza `realloc` para agrandar la zona de memoria utilizada para conquistar el mundo. El resultado de `realloc` lo guardo en una variable auxiliar para no perder el puntero original en caso de error:
+La función `hash_crear` toma como parámetro 'capacidad' de tipo size_t y retorna un puntero a un hash_t en caso de exito. Para asignar memoria en el heap a un nuevo hash_t utiliza `malloc` y lo guarda en el puntero de hash, en caso de error retorno NULL. 
 
 ```c
-int *vector = realloc(vector_original, (n+1)*sizeof(int));
+hash_t *hash = malloc(sizeof(hash_t));
 
-if(vector == NULL)
-    return -1;
-vector_original = vector;
+if (!hash)
+    return NULL;
+```
+
+Luego, asigno memoria en el heap utilizando `calloc` para un vector de punteros a nodo_t, el número de elementos en este array es igual a capacidad, y el tamaño de cada elemento es el tamaño de un puntero a nodo_t. Esto lo guardo en el puntero de `hash->tabla`, en caso de error retorno NULL y libero la memoria asignada anteriormente.
+
+```c
+hash->tabla = calloc(capacidad, sizeof(nodo_t *));
+
+if (!hash->tabla) {
+    free(hash);
+    return NULL;
+}
+```
+
+Por último, inicializo los valores del hash y retorno el hash creado.
+
+```c
+hash->capacidad = capacidad;
+hash->cantidad = 0;
+return hash;
 ```
 
 
 <div align="center">
-<img width="70%" src="img/diagrama2.svg">
+<img width="70%" src="img/hash-crear.png">
 </div>
 
 ---
 
 ## Respuestas a las preguntas teóricas
-Incluír acá las respuestas a las preguntas del enunciado (si aplica).
+- ¿Qué es un diccionario?
+    Un diccionario es una estructura de datos que permite almacenar y recuperar datos de manera eficiente, de la forma clave-valor. La clave es un identificador único que permite acceder a un valor asociado a la misma. 
+
+<div align="center">
+<img width="70%" src="img/diccionario.png">
+</div>
+
+- ¿Qué es una función de hash y qué características debe tener?
+    Una función de hash es una función que permite transformar una clave en un valor de hash, normalmente es un numero asociado. Debe ser determinística, es decir, que para una misma clave siempre devuelva el mismo numero.
+
+<div align="center">
+<img width="70%" src="img/hash.png">
+</div>
+
+- ¿Qué es una tabla de Hash y los diferentes métodos de resolución de colisiones vistos (encadenamiento, probing, zona de desborde)?
+    La tabla de hash es una estructura que contiene valores, donde puedo acceder a los mismos a través de una clave.
+    Los diferentes métodos de resolución de colisiones son:
+    - Encadenamiento: Se utiliza una lista enlazada para almacenar los elementos que colisionan.
+    - Probing: Se busca el siguiente espacio libre inmediato donde se almacena el elemento de colisión.
+    - Zona de desborde: Se utiliza una zona de la tabla de hash para almacenar los elementos que colisionan.
+<div align="center">
+<img width="70%" src="img/tabla-hash.png">
+</div>
