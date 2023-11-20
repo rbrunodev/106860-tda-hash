@@ -24,7 +24,7 @@ valgrind ./pruebas_alumno
 ```
 ---
 ##  Funcionamiento
-La función `hash_crear` utiliza `malloc` para asignar memoria en el heap para un nuevo hash_t y lo guardo en el puntero de hash, en caso de error retorno NULL. 
+La función `hash_crear` toma como parámetro 'capacidad' de tipo size_t y retorna un puntero a un hash_t en caso de exito. Para asignar memoria en el heap a un nuevo hash_t utiliza `malloc` y lo guarda en el puntero de hash, en caso de error retorno NULL. 
 
 ```c
 hash_t *hash = malloc(sizeof(hash_t));
